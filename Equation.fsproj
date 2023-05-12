@@ -10,4 +10,8 @@
     <Compile Include="Equa2.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ListVec\ListVec.fsproj" />
+  </ItemGroup>
 </Project>
