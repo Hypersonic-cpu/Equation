@@ -59,7 +59,7 @@ type MFunc(n:int, f:float list -> double) =
             pts, this.F pts, true
 
     member this.ExtremumWith(point0:float list, step0:double, ?equs:(float list -> double) list, ?ines:(float list -> double)list, 
-        ?miu, ?rou,?precision, ?maxLoops:int, ?findOpt:FuncSolveOpt, ?showOpt:ShowSolveOpt) =
+        ?miu, ?rou, ?precision, ?maxLoops:int, ?findOpt:FuncSolveOpt, ?showOpt:ShowSolveOpt) =
         let rou, precision, maxLoops, findOpt, showOpt, equs, ines = 
             defaultArg rou 1.025,
             defaultArg precision 1e-4,
