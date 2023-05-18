@@ -1,4 +1,4 @@
-﻿namespace Function
+namespace Function
 open LVec
 
 type FuncSolveOpt =
@@ -83,7 +83,7 @@ type MFunc(n:int, f:float list -> double) =
         while counter <= maxLoops do
             grad <- List.map(fun id -> MFunc.Partial(phi, id, pts, precision)) [0..(this.N - 1)]
             let nP st = Add(pts, Muti(-st, grad))
-            while phi(nP step) > phi (nP (step/2.)) && phi(nP step) > phi (pts) 
+            while not (phi(nP step) < phi (nP (step/2.)) && phi(nP step) < phi (pts)) 
                 && Mudulus(Muti(step, grad)) >= precision do
                 step <- step / 2.
             pts <- nP step
