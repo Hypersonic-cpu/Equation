@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Include="Equa2.fs" />
+    <Compile Include="Equa1.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>
 

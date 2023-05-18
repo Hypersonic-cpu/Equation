@@ -2,7 +2,8 @@
 // See the 'F# Tutorial' project for more help.
 
 #load "Equa2.fs"
-open Function
+#load "Equa1.fs"
+open Equation
 
 // Define your library scripting code here
 

@@ -1,4 +1,4 @@
-namespace Function
+namespace Equation
 open LVec
 
 type FuncSolveOpt =
@@ -8,13 +8,14 @@ type FuncSolveOpt =
 type ShowSolveOpt =
 | OnlyResult = 0
 | WithProcess = 1
+| WithDetail = 2
 
-type MFunc(n:int, f:float list -> double) = 
+type MFunc(n:int, f:float list -> double) = class
     member val F = f
     member val N = n
 
     static member Partial (fu:float list -> double, vari:int, pt:float list, ?delta:double) =
-        let dv = defaultArg delta 1e-6
+        let dv = defaultArg delta 1e-8
         let pt_ = List.mapi(fun i x -> 
             if i = vari then x + dv
             else x) pt
@@ -46,7 +47,9 @@ type MFunc(n:int, f:float list -> double) =
             pts <- Add(pts, Muti(-step, grad))
             
             match showOpt with
-            | ShowSolveOpt.WithProcess
+            | ShowSolveOpt.WithProcess 
+                -> printfn "L%i: %A %f" counter pts (this.F pts)
+            | ShowSolveOpt.WithDetail
                 -> printfn "L%i: F%A = %f, Grad%A, Step %f" counter pts (this.F pts) grad step
             | _ -> ()
             grad <- List.map(fun id -> MFunc.Partial(Fun, id, pts, precision)) [0..(this.N - 1)]
@@ -88,14 +91,18 @@ type MFunc(n:int, f:float list -> double) =
                 step <- step / 2.
             pts <- nP step
             match showOpt with
-            | ShowSolveOpt.WithProcess 
-                -> printfn "L%i: F|Φ%A = %.3f|%.3f, ▽%A, Step%.3f, μ %.2f %f" counter pts (this.F pts) (phi pts) grad step miu1 miu2
+            | ShowSolveOpt.WithProcess
+                -> printfn "L%i: %A %f" counter pts (this.F pts)
+            | ShowSolveOpt.WithDetail 
+                -> printfn "L%i: F|Φ%A = %.3f|%.3f, ▽%A, Step%.3f, μ %5f %f" counter pts (this.F pts) (phi pts) grad step miu1 miu2
             | _ -> ()
             miu1 <- miu1 * rou
             miu2 <- miu2 / rou
+            step <- step * rou * rou
             counter <- counter + 1
             if Mudulus(Muti(step, grad)) < precision then counter <- maxLoops + 2
         pts, this.F pts, if counter = maxLoops + 2 then true else false
 
     override this.ToString() =
         $"MFunc(x[{this.N}])"
+end
