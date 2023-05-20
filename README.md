@@ -9,8 +9,7 @@ Depend on ListMatrix
 Depend on Equa2.fs
 
 ### Equa2.fs
-函数类，功能有
+函数 Class MFunc，功能有
 
-1.梯度下降法求解局部极值。
-
-2.罚函数法求解带约束的极值
++ 梯度下降法求解局部极值。
++ 罚函数法求解带约束的极值
